@@ -312,10 +312,15 @@ install_tmux_plugins() {
 set_default_shell() {
 	log "Setting zsh as default shell"
 
-	local zsh_path
+	local zsh_path current_shell
 	zsh_path="$(command -v zsh)"
+	# Check the shell registered in /etc/passwd, not $SHELL: $SHELL just
+	# reflects whatever shell this script happens to be running under
+	# (e.g. if zsh was launched manually to try it out), which can differ
+	# from what chsh last actually persisted.
+	current_shell="$(getent passwd "$USER" | cut -d: -f7)"
 
-	if [[ "$SHELL" == "$zsh_path" ]]; then
+	if [[ "$current_shell" == "$zsh_path" ]]; then
 		log "zsh is already the default shell, skipping"
 		return
 	fi
