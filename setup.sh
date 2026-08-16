@@ -9,7 +9,7 @@ PACKAGES_FILE="${SCRIPT_DIR}/packages.txt"
 TPM_REPO="https://github.com/tmux-plugins/tpm.git"
 NVIM_DIR="$HOME/.local/opt/nvim"
 NVIM_TARBALL_URL="https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz"
-WIN32YANK_URL="https://github.com/equalsraf/win32yank/releases/latest/download/win32yank-win64.zip"
+WIN32YANK_URL="https://github.com/equalsraf/win32yank/releases/latest/download/win32yank-x64.zip"
 
 log() { echo -e "\e[1;32m[setup]\e[0m $*"; }
 
