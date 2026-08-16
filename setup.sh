@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eou pipefail
+set -Eeuo pipefail
 
 # --- Config ---
 NERD_FONT_NAME="IBMPlexMono"
@@ -12,6 +12,13 @@ NVIM_TARBALL_URL="https://github.com/neovim/neovim/releases/latest/download/nvim
 WIN32YANK_URL="https://github.com/equalsraf/win32yank/releases/latest/download/win32yank-x64.zip"
 
 log() { echo -e "\e[1;32m[setup]\e[0m $*"; }
+
+# Surface exactly where/why the script died instead of failing silently
+# (set -e just stops execution with no indication of what broke).
+on_error() {
+	echo -e "\e[1;31m[setup] FAILED\e[0m (exit $1) at line $2: $3" >&2
+}
+trap 'on_error "$?" "$LINENO" "$BASH_COMMAND"' ERR
 
 is_wsl() {
 	grep -qi microsoft /proc/sys/kernel/osrelease 2>/dev/null
