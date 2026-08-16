@@ -330,7 +330,10 @@ set_default_shell() {
 		echo "$zsh_path" | sudo tee -a /etc/shells > /dev/null
 	fi
 
-	chsh -s "$zsh_path"
+	# usermod (not chsh) writes /etc/passwd directly via sudo, instead of
+	# going through PAM's interactive chsh auth prompt, which has proven
+	# flaky/silently-failing in some environments (e.g. WSL).
+	sudo usermod --shell "$zsh_path" "$USER"
 	log "Default shell set to zsh (effective on next login)"
 }
 

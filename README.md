@@ -64,6 +64,32 @@ The script is idempotent — safe to re-run after pulling updates.
 - `tldr`'s Debian/Ubuntu apt package name is unreliable across releases; we
   use `tealdeer` instead, which provides the same `tldr` binary.
 
+## Windows Terminal profile
+
+The Ubuntu profile's *Command line* should be exactly:
+
+```
+wsl.exe -d Ubuntu --cd ~
+```
+
+`--cd ~` is the documented WSL flag for starting in the Linux user's home
+directory. Don't append a bare `~` as its own argument without `--cd` —
+without it, WSL treats `~` as a command to *run* rather than a directory,
+which (still on bash, or if the shell field is otherwise off) fails with
+something like `/bin/bash: line 1: /home/<user>: Is a directory`.
+
+If the profile's command line is already correct but the shell still isn't
+zsh, check what's actually registered for your user rather than trusting a
+running shell's `$SHELL`:
+
+```sh
+getent passwd "$USER" | cut -d: -f7
+```
+
+`setup.sh`'s `set_default_shell` uses `sudo usermod --shell` (not `chsh`) for
+exactly this reason — `chsh`'s interactive PAM prompt has been unreliable
+under WSL in practice.
+
 ## Enabling systemd in WSL (optional, needed for native Docker)
 
 If you're not using Docker Desktop and want `configure_docker`'s
