@@ -1,8 +1,1 @@
-// Ignore everythin except the tracked repositories
-*
-!nvim/
-!tmux/
-!.gitconfig
-!.gitignore
-!README.md
-!LICENSE
+*.swp

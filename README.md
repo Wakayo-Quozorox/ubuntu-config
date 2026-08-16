@@ -1,13 +1,73 @@
 # ubuntu-config
-Basic config for general tools under ubuntu
 
-# Tools managed
+Personal tool setup for Ubuntu, primarily targeting **WSL2** (Windows
+Subsystem for Linux). Mirrors the tool configuration from my
+[Fedora setup](https://github.com/Wakayo-Quozorox/customization-fedora), minus
+anything GNOME/desktop-specific that doesn't apply here (accent color,
+wallpaper, GNOME keybindings, Flathub, kitty/ghostty — under WSL the terminal
+emulator is Windows Terminal, not a Linux GUI app).
 
-## nvim
+## Usage
 
-## tmux
+```sh
+git clone --recurse-submodules git@github.com:Wakayo-Quozorox/ubuntu-config.git
+cd ubuntu-config
+./setup.sh
+```
 
-## git
+The script is idempotent — safe to re-run after pulling updates.
 
-Copy .gitconfig in home folder for config to work (to be improved)
+## What it sets up
 
+- **Shell**: zsh (default shell), zsh-autosuggestions, zsh-syntax-highlighting,
+  starship prompt, zoxide, fzf, direnv — bash is also wired up with the
+  starship prompt as a fallback.
+- **Terminal multiplexer**: tmux, with tpm and the same plugin set as the
+  Fedora config (catppuccin theme, resurrect/continuum, vim-tmux-navigator).
+- **Editor**: Neovim (kickstart-based config, submodule), installed from the
+  official GitHub release tarball since Ubuntu's apt version is normally too
+  old for it.
+- **Git tooling**: lazygit, git-delta (Catppuccin Mocha theme), same
+  `configure_git` global config as the Fedora setup.
+- **Modern CLI replacements**: ripgrep, fd, bat, eza, btop.
+- **Build tools**: make, gcc, clang + clang-format/clang-tidy/clangd, bear.
+- **Docker**: uses Docker Desktop's WSL integration if `docker` already works;
+  otherwise installs Docker Engine from the official apt repo and enables it
+  via systemd if the WSL instance has systemd enabled (see below).
+- **WSL-specific extras**:
+  - `win32yank.exe` so Neovim's `unnamedplus` clipboard syncs with Windows.
+  - Downloads the BlexMono Nerd Font zip straight into your Windows Downloads
+    folder (font *installation* itself has to happen on the Windows side —
+    extract, select all `.ttf` files, right-click > Install — then set that
+    font in Windows Terminal).
+
+## Not included on purpose
+
+- **VS Code**: install it on Windows and use the "WSL" extension to connect
+  into this distro (`code .` from a WSL shell then works automatically). No
+  need to install VS Code inside WSL itself.
+- **kitty / ghostty**: the actual terminal emulator here is Windows Terminal;
+  no Linux GUI terminal is installed.
+
+## Notes on Debian/Ubuntu package naming
+
+- `bat`'s binary is named `batcat` (name clash with an unrelated package);
+  `fd-find`'s binary is named `fdfind`. `dotfiles/aliases.zsh` detects
+  whichever is present and aliases accordingly.
+- `eza`, `starship`, `zoxide`, `neovim`, `lazygit`, `git-delta` aren't
+  available (or are too outdated) via stock apt, so `setup.sh` pulls them
+  from their official repo/installer/GitHub releases instead — see the
+  `install_*` functions.
+
+## Enabling systemd in WSL (optional, needed for native Docker)
+
+If you're not using Docker Desktop and want `configure_docker`'s
+`systemctl enable --now docker` to actually take effect, add to
+`/etc/wsl.conf`:
+
+```ini
+[boot]
+systemd=true
+```
+
+then run `wsl --shutdown` from Windows and reopen the distro.

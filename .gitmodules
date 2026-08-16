@@ -1,6 +1,3 @@
-[submodule "nvim"]
-	path = nvim
+[submodule "dotfiles/nvim"]
+	path = dotfiles/nvim
 	url = git@github.com:Wakayo-Quozorox/nvim.git
-[submodule "tmux"]
-	path = tmux
-	url = git@github.com:Wakayo-Quozorox/tmux.git

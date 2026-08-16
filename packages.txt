@@ -1,0 +1,46 @@
+# apt package names, one per line. Blank lines and lines starting with '#'
+# are ignored. Tools without a (recent enough / any) apt package are
+# installed separately in setup.sh (starship, zoxide, eza, neovim, lazygit,
+# git-delta) — see install_* functions there.
+
+# Shell & prompt
+zsh
+zsh-autosuggestions     # ghost suggestions from history as you type
+zsh-syntax-highlighting # colors valid/invalid commands while typing
+
+# Terminal multiplexer
+tmux
+
+# Editor & git tooling
+git
+# lazygit and git-delta have no (recent enough) apt package: installed
+# straight from GitHub releases by setup.sh
+
+# Build tools
+make
+gcc
+clang
+clang-format
+clang-tidy
+clangd
+bear # generates compile_commands.json for Makefile-based projects
+
+# Modern CLI replacements
+ripgrep # grep
+fd-find # find (binary is fdfind on Debian/Ubuntu)
+bat     # cat (binary is batcat on Debian/Ubuntu)
+eza     # ls, from the eza apt repo
+fzf     # fuzzy finder
+btop    # htop/top
+
+# Misc utils
+unzip
+jq  # JSON processor, also used by setup.sh to query GitHub releases
+ncdu   # disk usage analyzer
+direnv # per-directory environment variables
+tldr   # simplified man pages
+
+# Needed to add third-party apt repos (eza, Docker) below
+ca-certificates
+curl
+gnupg
