@@ -12,6 +12,7 @@ NVIM_TARBALL_URL="https://github.com/neovim/neovim/releases/latest/download/nvim
 WIN32YANK_URL="https://github.com/equalsraf/win32yank/releases/latest/download/win32yank-x64.zip"
 
 log() { echo -e "\e[1;32m[setup]\e[0m $*"; }
+action() { echo -e "\e[1;30;43m ACTION NEEDED \e[0m $*"; }
 
 # Surface exactly where/why the script died instead of failing silently
 # (set -e just stops execution with no indication of what broke).
@@ -200,8 +201,8 @@ setup_windows_fonts() {
 	fi
 
 	log "Saved to ${target_zip}."
-	log "ACTION NEEDED (on Windows): extract that zip, select all the .ttf files, right-click > Install."
-	log "Then set Windows Terminal's font to \"BlexMono Nerd Font\"."
+	action "(on Windows): extract that zip, select all the .ttf files, right-click > Install."
+	action "Then set Windows Terminal's font to \"BlexMono Nerd Font\"."
 }
 
 setup_dotfiles() {
