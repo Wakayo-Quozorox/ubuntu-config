@@ -38,7 +38,8 @@ unzip
 jq  # JSON processor, also used by setup.sh to query GitHub releases
 ncdu   # disk usage analyzer
 direnv # per-directory environment variables
-tldr   # simplified man pages
+tealdeer # simplified man pages (provides the `tldr` binary; the "tldr" apt
+         # package itself isn't reliably available across Ubuntu releases)
 
 # Needed to add third-party apt repos (eza, Docker) below
 ca-certificates

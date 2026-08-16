@@ -29,7 +29,10 @@ The script is idempotent — safe to re-run after pulling updates.
   old for it.
 - **Git tooling**: lazygit, git-delta (Catppuccin Mocha theme), same
   `configure_git` global config as the Fedora setup.
-- **Modern CLI replacements**: ripgrep, fd, bat, eza, btop.
+- **Claude Code**: installed via the official native installer
+  (`curl -fsSL https://claude.ai/install.sh | bash`), no Node.js required; it
+  self-updates afterwards.
+- **Modern CLI replacements**: ripgrep, fd, bat, eza, btop, tealdeer (`tldr`).
 - **Build tools**: make, gcc, clang + clang-format/clang-tidy/clangd, bear.
 - **Docker**: uses Docker Desktop's WSL integration if `docker` already works;
   otherwise installs Docker Engine from the official apt repo and enables it
@@ -54,10 +57,12 @@ The script is idempotent — safe to re-run after pulling updates.
 - `bat`'s binary is named `batcat` (name clash with an unrelated package);
   `fd-find`'s binary is named `fdfind`. `dotfiles/aliases.zsh` detects
   whichever is present and aliases accordingly.
-- `eza`, `starship`, `zoxide`, `neovim`, `lazygit`, `git-delta` aren't
+- `eza`, `starship`, `zoxide`, `neovim`, `lazygit`, `git-delta`, `claude` aren't
   available (or are too outdated) via stock apt, so `setup.sh` pulls them
   from their official repo/installer/GitHub releases instead — see the
   `install_*` functions.
+- `tldr`'s Debian/Ubuntu apt package name is unreliable across releases; we
+  use `tealdeer` instead, which provides the same `tldr` binary.
 
 ## Enabling systemd in WSL (optional, needed for native Docker)
 

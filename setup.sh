@@ -135,6 +135,15 @@ install_delta() {
 	log "git-delta ${version} installed"
 }
 
+install_claude_code() {
+	if command -v claude &>/dev/null; then
+		log "Claude Code already installed, skipping (it self-updates)"
+		return
+	fi
+	log "Installing Claude Code"
+	curl -fsSL https://claude.ai/install.sh | bash
+}
+
 install_win32yank() {
 	if ! is_wsl; then
 		return
@@ -276,6 +285,16 @@ build_bat_cache() {
 	"$bat_bin" cache --build
 }
 
+build_tldr_cache() {
+	if ! command -v tldr &>/dev/null; then
+		log "tldr not found, skipping tldr cache update"
+		return
+	fi
+
+	log "Updating tldr pages cache"
+	tldr --update
+}
+
 install_tmux_plugins() {
 	log "Installing tmux plugin manager (tpm)"
 
@@ -376,11 +395,13 @@ main() {
 	install_neovim
 	install_lazygit
 	install_delta
+	install_claude_code
 	install_win32yank
 	setup_windows_fonts
 	init_submodules
 	setup_dotfiles
 	build_bat_cache
+	build_tldr_cache
 	install_tmux_plugins
 	configure_docker
 	configure_git
