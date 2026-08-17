@@ -1,5 +1,10 @@
 eval "$(zoxide init zsh --cmd cd)"
-eval "$(fzf --zsh)"
+if fzf --zsh >/dev/null 2>&1; then
+  eval "$(fzf --zsh)"
+else
+  [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+  [ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
+fi
 eval "$(direnv hook zsh)"
 
 alias ls='eza --group-directories-first --icons=auto'
