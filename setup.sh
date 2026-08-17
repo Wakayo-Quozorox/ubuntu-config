@@ -351,7 +351,6 @@ build_tldr_cache() {
 	fi
 
 	log "Updating tldr pages cache"
-	tldr --update
 }
 
 install_tmux_plugins() {
