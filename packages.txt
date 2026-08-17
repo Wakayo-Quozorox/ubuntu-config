@@ -1,7 +1,7 @@
 # apt package names, one per line. Blank lines and lines starting with '#'
 # are ignored. Tools without a (recent enough / any) apt package are
 # installed separately in setup.sh (starship, zoxide, eza, neovim, lazygit,
-# git-delta, fastfetch, onefetch) — see install_* functions there.
+# git-delta, fastfetch, onefetch, bat) — see install_* functions there.
 
 # Shell & prompt
 zsh
@@ -28,7 +28,10 @@ bear # generates compile_commands.json for Makefile-based projects
 # Modern CLI replacements
 ripgrep # grep
 fd-find # find (binary is fdfind on Debian/Ubuntu)
-bat     # cat (binary is batcat on Debian/Ubuntu)
+# bat has no apt package here: apt's version lags far behind delta's
+# vendored bat library, and a theme cache built by an older bat than the
+# one delta embeds makes delta panic on startup. installed straight from
+# GitHub releases by setup.sh instead, in step with git-delta.
 eza     # ls, from the eza apt repo
 fzf     # fuzzy finder
 btop    # htop/top

@@ -143,6 +143,24 @@ install_delta() {
 	log "git-delta ${version} installed"
 }
 
+install_bat() {
+	if command -v bat &>/dev/null; then
+		log "bat already installed, skipping"
+		return
+	fi
+	log "Installing bat"
+
+	local tag_name version arch tmp_deb
+	tag_name="$(curl -fsSL https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r '.tag_name')"
+	version="${tag_name#v}"
+	arch="$(dpkg --print-architecture)"
+	tmp_deb="$(mktemp --suffix=.deb)"
+	wget -q -O "$tmp_deb" "https://github.com/sharkdp/bat/releases/download/${tag_name}/bat_${version}_${arch}.deb"
+	sudo dpkg -i "$tmp_deb" || sudo apt-get install -f -y
+	rm -f "$tmp_deb"
+	log "bat ${version} installed"
+}
+
 install_fastfetch() {
 	if command -v fastfetch &>/dev/null; then
 		log "fastfetch already installed, skipping"
@@ -452,6 +470,7 @@ main() {
 	install_zoxide
 	install_neovim
 	install_lazygit
+	install_bat
 	install_delta
 	install_fastfetch
 	install_onefetch
