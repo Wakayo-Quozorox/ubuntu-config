@@ -260,7 +260,7 @@ setup_dotfiles() {
 	mkdir -p "$tmux_config_dir"
 	ln -sf "${SCRIPT_DIR}/dotfiles/tmux/tmux.conf" "${tmux_config_dir}/tmux.conf"
 
-	ln -sf "${SCRIPT_DIR}/dotfiles/nvim" "$HOME/.config/nvim"
+	ln -sfT "${SCRIPT_DIR}/dotfiles/nvim" "$HOME/.config/nvim"
 
 	local lazygit_config_dir="$HOME/.config/lazygit"
 	mkdir -p "$lazygit_config_dir"
