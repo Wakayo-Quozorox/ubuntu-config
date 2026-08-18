@@ -274,6 +274,7 @@ setup_dotfiles() {
 	local git_config_dir="$HOME/.config/git"
 	mkdir -p "$git_config_dir"
 	ln -sf "${SCRIPT_DIR}/dotfiles/delta/catppuccin.gitconfig" "${git_config_dir}/catppuccin.gitconfig"
+	ln -sf "${SCRIPT_DIR}/dotfiles/git/aliases.gitconfig" "${git_config_dir}/aliases.gitconfig"
 
 	local btop_config_dir="$HOME/.config/btop"
 	mkdir -p "$btop_config_dir"
@@ -387,8 +388,6 @@ configure_docker() {
 
 configure_git() {
 	log "Configuring git"
-	git config --global user.name "Wakayo Quozorox"
-	git config --global user.email "5816546+Wakayo-Quozorox@users.noreply.github.com"
 	git config --global core.editor "nvim"
 	git config --global init.defaultBranch main
 	git config --global core.pager delta
@@ -401,6 +400,10 @@ configure_git() {
 	# The dotfile is symlinked into ~/.config/git by setup_dotfiles.
 	git config --global include.path "$HOME/.config/git/catppuccin.gitconfig"
 	git config --global delta.features catppuccin-mocha
+
+	# Git aliases (co, st, tree, ...). The dotfile is symlinked into
+	# ~/.config/git by setup_dotfiles.
+	git config --global include.path "$HOME/.config/git/aliases.gitconfig"
 }
 
 main() {
