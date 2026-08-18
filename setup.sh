@@ -107,6 +107,38 @@ install_neovim() {
 	log "Neovim installed"
 }
 
+# Pinned instead of "latest": releases from v0.25.x onward are built against
+# GLIBC_2.39, which is newer than what Ubuntu 22.04 (jammy, GLIBC 2.35) ships.
+# v0.24.0 is the newest release confirmed to run on jammy.
+TREE_SITTER_CLI_VERSION="v0.24.0"
+
+install_tree_sitter_cli() {
+	if command -v tree-sitter &>/dev/null; then
+		log "tree-sitter-cli already installed, skipping"
+		return
+	fi
+	log "Installing tree-sitter-cli ${TREE_SITTER_CLI_VERSION}"
+
+	local arch tmp_gz bin_path
+	arch="$(dpkg --print-architecture)"
+	case "$arch" in
+		amd64) arch=x64 ;;
+		arm64) arch=arm64 ;;
+		*)
+			log "Unsupported architecture ${arch} for tree-sitter-cli, skipping"
+			return
+			;;
+	esac
+	tmp_gz="$(mktemp --suffix=.gz)"
+	wget -q -O "$tmp_gz" "https://github.com/tree-sitter/tree-sitter/releases/download/${TREE_SITTER_CLI_VERSION}/tree-sitter-linux-${arch}.gz"
+	mkdir -p "$HOME/.local/bin"
+	bin_path="$HOME/.local/bin/tree-sitter"
+	gunzip -c "$tmp_gz" > "$bin_path"
+	rm -f "$tmp_gz"
+	chmod +x "$bin_path"
+	log "tree-sitter-cli ${TREE_SITTER_CLI_VERSION} installed"
+}
+
 install_lazygit() {
 	if command -v lazygit &>/dev/null; then
 		log "lazygit already installed, skipping"
@@ -488,16 +520,13 @@ main() {
 	install_starship
 	install_zoxide
 	install_neovim
+	install_tree_sitter_cli
 	install_lazygit
 	install_bat
 	install_delta
-<<<<<<< HEAD
+	install_fzf
 	install_fastfetch
 	install_onefetch
-||||||| parent of 54b8470 (Install fzf from GitHub releases instead of apt)
-=======
-	install_fzf
->>>>>>> 54b8470 (Install fzf from GitHub releases instead of apt)
 	install_claude_code
 	install_win32yank
 	setup_windows_fonts
