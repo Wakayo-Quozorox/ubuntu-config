@@ -5,7 +5,7 @@ eval "$(direnv hook zsh)"
 alias ls='eza --group-directories-first --icons=auto'
 alias ll='eza -l --group-directories-first --icons=auto'
 alias la='eza -la --group-directories-first --icons=auto'
-alias lt='eza --tree --group-directories-first --icons=auto'
+alias lt='eza --tree --level 1 --group-directories-first --icons=auto'
 
 # Debian/Ubuntu ship bat and fd-find under the names batcat/fdfind to avoid
 # clashing with unrelated packages already using "bat"/"find".
@@ -25,3 +25,4 @@ fi
 
 alias vim='nvim'
 alias top='btop'
+alias lg='lazygit'
