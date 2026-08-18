@@ -1,7 +1,8 @@
 # apt package names, one per line. Blank lines and lines starting with '#'
 # are ignored. Tools without a (recent enough / any) apt package are
 # installed separately in setup.sh (starship, zoxide, eza, neovim, lazygit,
-# git-delta, fastfetch, onefetch, bat) — see install_* functions there.
+# git-delta, fastfetch, onefetch, bat, fzf) — see install_* functions
+# there.
 
 # Shell & prompt
 zsh
@@ -33,7 +34,10 @@ fd-find # find (binary is fdfind on Debian/Ubuntu)
 # one delta embeds makes delta panic on startup. installed straight from
 # GitHub releases by setup.sh instead, in step with git-delta.
 eza     # ls, from the eza apt repo
-fzf     # fuzzy finder
+# fzf has no apt package here: apt's version (0.29 on jammy) predates the
+# `selected-bg` color the Catppuccin FZF_DEFAULT_OPTS theme uses, so fzf
+# refuses to start ("invalid color specification") and Ctrl-R does nothing.
+# installed straight from GitHub releases by setup.sh instead.
 btop    # htop/top
 
 # Misc utils

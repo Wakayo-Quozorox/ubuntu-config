@@ -161,6 +161,25 @@ install_bat() {
 	log "bat ${version} installed"
 }
 
+install_fzf() {
+	local tag_name version arch installed tmp_deb
+	tag_name="$(curl -fsSL https://api.github.com/repos/junegunn/fzf/releases/latest | jq -r '.tag_name')"
+	version="${tag_name#v}"
+	installed="$(dpkg-query -W -f='${Version}' fzf 2>/dev/null || true)"
+	if [[ "$installed" == "$version" ]]; then
+		log "fzf already installed, skipping"
+		return
+	fi
+	log "Installing fzf"
+
+	arch="$(dpkg --print-architecture)"
+	tmp_deb="$(mktemp --suffix=.deb)"
+	wget -q -O "$tmp_deb" "https://github.com/junegunn/fzf/releases/download/${tag_name}/fzf_${version}_${arch}.deb"
+	sudo dpkg -i "$tmp_deb" || sudo apt-get install -f -y
+	rm -f "$tmp_deb"
+	log "fzf ${version} installed"
+}
+
 install_fastfetch() {
 	if command -v fastfetch &>/dev/null; then
 		log "fastfetch already installed, skipping"
@@ -472,8 +491,13 @@ main() {
 	install_lazygit
 	install_bat
 	install_delta
+<<<<<<< HEAD
 	install_fastfetch
 	install_onefetch
+||||||| parent of 54b8470 (Install fzf from GitHub releases instead of apt)
+=======
+	install_fzf
+>>>>>>> 54b8470 (Install fzf from GitHub releases instead of apt)
 	install_claude_code
 	install_win32yank
 	setup_windows_fonts
