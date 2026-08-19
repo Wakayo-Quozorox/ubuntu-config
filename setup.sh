@@ -143,6 +143,31 @@ install_delta() {
 	log "git-delta ${version} installed"
 }
 
+install_fastfetch() {
+	if command -v fastfetch &>/dev/null; then
+		log "fastfetch already installed, skipping"
+		return
+	fi
+	log "Installing fastfetch"
+
+	local tag_name arch tmp_deb
+	tag_name="$(curl -fsSL https://api.github.com/repos/fastfetch-cli/fastfetch/releases/latest | jq -r '.tag_name')"
+	arch="$(dpkg --print-architecture)"
+	case "$arch" in
+		amd64) arch=amd64 ;;
+		arm64) arch=aarch64 ;;
+		*)
+			log "Unsupported architecture ${arch} for fastfetch, skipping"
+			return
+			;;
+	esac
+	tmp_deb="$(mktemp --suffix=.deb)"
+	wget -q -O "$tmp_deb" "https://github.com/fastfetch-cli/fastfetch/releases/download/${tag_name}/fastfetch-linux-${arch}.deb"
+	sudo dpkg -i "$tmp_deb" || sudo apt-get install -f -y
+	rm -f "$tmp_deb"
+	log "fastfetch ${tag_name} installed"
+}
+
 install_claude_code() {
 	if command -v claude &>/dev/null; then
 		log "Claude Code already installed, skipping (it self-updates)"
@@ -414,6 +439,7 @@ main() {
 	install_neovim
 	install_lazygit
 	install_delta
+	install_fastfetch
 	install_claude_code
 	install_win32yank
 	setup_windows_fonts

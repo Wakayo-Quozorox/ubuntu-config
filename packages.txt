@@ -1,7 +1,7 @@
 # apt package names, one per line. Blank lines and lines starting with '#'
 # are ignored. Tools without a (recent enough / any) apt package are
 # installed separately in setup.sh (starship, zoxide, eza, neovim, lazygit,
-# git-delta) — see install_* functions there.
+# git-delta, fastfetch) — see install_* functions there.
 
 # Shell & prompt
 zsh
