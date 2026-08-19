@@ -237,20 +237,24 @@ install_fastfetch() {
 	log "fastfetch ${tag_name} installed"
 }
 
+# Pinned instead of "latest": releases from 2.22.0 onward require GLIBC_2.39,
+# which is newer than what Ubuntu 22.04 (jammy, GLIBC 2.35) ships. 2.21.0 is
+# the newest release confirmed to run on jammy.
+ONEFETCH_VERSION="2.21.0"
+
 install_onefetch() {
 	if command -v onefetch &>/dev/null; then
 		log "onefetch already installed, skipping"
 		return
 	fi
-	log "Installing onefetch"
+	log "Installing onefetch ${ONEFETCH_VERSION}"
 
-	local tag_name tmp_deb
-	tag_name="$(curl -fsSL https://api.github.com/repos/o2sh/onefetch/releases/latest | jq -r '.tag_name')"
+	local tmp_deb
 	tmp_deb="$(mktemp --suffix=.deb)"
-	wget -q -O "$tmp_deb" "https://github.com/o2sh/onefetch/releases/download/${tag_name}/onefetch_amd64.deb"
+	wget -q -O "$tmp_deb" "https://github.com/o2sh/onefetch/releases/download/${ONEFETCH_VERSION}/onefetch_${ONEFETCH_VERSION}_amd64.deb"
 	sudo dpkg -i "$tmp_deb" || sudo apt-get install -f -y
 	rm -f "$tmp_deb"
-	log "onefetch ${tag_name} installed"
+	log "onefetch ${ONEFETCH_VERSION} installed"
 }
 
 install_claude_code() {
