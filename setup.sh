@@ -168,6 +168,22 @@ install_fastfetch() {
 	log "fastfetch ${tag_name} installed"
 }
 
+install_onefetch() {
+	if command -v onefetch &>/dev/null; then
+		log "onefetch already installed, skipping"
+		return
+	fi
+	log "Installing onefetch"
+
+	local tag_name tmp_deb
+	tag_name="$(curl -fsSL https://api.github.com/repos/o2sh/onefetch/releases/latest | jq -r '.tag_name')"
+	tmp_deb="$(mktemp --suffix=.deb)"
+	wget -q -O "$tmp_deb" "https://github.com/o2sh/onefetch/releases/download/${tag_name}/onefetch_amd64.deb"
+	sudo dpkg -i "$tmp_deb" || sudo apt-get install -f -y
+	rm -f "$tmp_deb"
+	log "onefetch ${tag_name} installed"
+}
+
 install_claude_code() {
 	if command -v claude &>/dev/null; then
 		log "Claude Code already installed, skipping (it self-updates)"
@@ -440,6 +456,7 @@ main() {
 	install_lazygit
 	install_delta
 	install_fastfetch
+	install_onefetch
 	install_claude_code
 	install_win32yank
 	setup_windows_fonts
