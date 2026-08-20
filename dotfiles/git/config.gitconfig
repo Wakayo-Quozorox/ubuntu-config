@@ -9,7 +9,7 @@
 	navigate = true
 	features = catppuccin-mocha
 [merge]
-	conflictstyle = zdiff3
+	conflictstyle = diff3
 	tool = nvimdiff
 [mergetool]
 	prompt = false
