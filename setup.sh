@@ -184,6 +184,16 @@ install_onefetch() {
 	log "onefetch ${tag_name} installed"
 }
 
+install_zsh_history_substring_search() {
+	local plugin_dir="$HOME/.local/share/zsh/plugins/zsh-history-substring-search"
+	if [[ -f "$plugin_dir/zsh-history-substring-search.zsh" ]]; then
+		log "zsh-history-substring-search already installed, skipping"
+		return
+	fi
+	log "Installing zsh-history-substring-search"
+	git clone -q --depth 1 https://github.com/zsh-users/zsh-history-substring-search.git "$plugin_dir"
+}
+
 install_claude_code() {
 	if command -v claude &>/dev/null; then
 		log "Claude Code already installed, skipping (it self-updates)"
@@ -456,6 +466,7 @@ main() {
 	install_delta
 	install_fastfetch
 	install_onefetch
+	install_zsh_history_substring_search
 	install_claude_code
 	install_win32yank
 	setup_windows_fonts
