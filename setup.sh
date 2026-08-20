@@ -294,7 +294,7 @@ setup_dotfiles() {
 		log "Added fzf Catppuccin theme source line to .zshrc"
 	fi
 
-	ln -sf "${SCRIPT_DIR}/dotfiles/welcome.zsh" "$zsh_config_dir/welcome.zsh"
+	ln -sf "${SCRIPT_DIR}/dotfiles/common/welcome.zsh" "$zsh_config_dir/welcome.zsh"
 
 	local welcome_source_line="source \"$zsh_config_dir/welcome.zsh\""
 	if ! grep -qF "$zsh_config_dir/welcome.zsh" "$HOME/.zshrc" 2>/dev/null; then
