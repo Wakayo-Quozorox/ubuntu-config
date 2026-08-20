@@ -251,7 +251,7 @@ setup_dotfiles() {
 
 	local bash_config_dir="$HOME/.config/bash"
 	mkdir -p "$bash_config_dir"
-	ln -sf "${SCRIPT_DIR}/dotfiles/starship.sh" "$bash_config_dir/starship.sh"
+	ln -sf "${SCRIPT_DIR}/dotfiles/common/starship.sh" "$bash_config_dir/starship.sh"
 
 	local bash_source_line="source \"$bash_config_dir/starship.sh\""
 	if ! grep -qF "$bash_config_dir/starship.sh" "$HOME/.bashrc" 2>/dev/null; then
@@ -261,10 +261,10 @@ setup_dotfiles() {
 
 	local zsh_config_dir="$HOME/.config/zsh"
 	mkdir -p "$zsh_config_dir"
-	ln -sf "${SCRIPT_DIR}/dotfiles/starship.zsh" "$zsh_config_dir/starship.zsh"
-	ln -sf "${SCRIPT_DIR}/dotfiles/aliases.zsh" "$zsh_config_dir/aliases.zsh"
+	ln -sf "${SCRIPT_DIR}/dotfiles/common/starship.zsh" "$zsh_config_dir/starship.zsh"
+	ln -sf "${SCRIPT_DIR}/dotfiles/common/aliases.zsh" "$zsh_config_dir/aliases.zsh"
 
-	ln -sf "${SCRIPT_DIR}/dotfiles/zshenv" "$HOME/.zshenv"
+	ln -sf "${SCRIPT_DIR}/dotfiles/common/zshenv" "$HOME/.zshenv"
 
 	local zsh_source_line="source \"$zsh_config_dir/starship.zsh\""
 	if ! grep -qF "$zsh_config_dir/starship.zsh" "$HOME/.zshrc" 2>/dev/null; then
@@ -278,7 +278,7 @@ setup_dotfiles() {
 		log "Added aliases source line to .zshrc"
 	fi
 
-	ln -sf "${SCRIPT_DIR}/dotfiles/completion.zsh" "$zsh_config_dir/completion.zsh"
+	ln -sf "${SCRIPT_DIR}/dotfiles/common/completion.zsh" "$zsh_config_dir/completion.zsh"
 
 	local completion_source_line="source \"$zsh_config_dir/completion.zsh\""
 	if ! grep -qF "$zsh_config_dir/completion.zsh" "$HOME/.zshrc" 2>/dev/null; then
@@ -286,7 +286,7 @@ setup_dotfiles() {
 		log "Added completion source line to .zshrc"
 	fi
 
-	ln -sf "${SCRIPT_DIR}/dotfiles/fzf-catppuccin.sh" "$zsh_config_dir/fzf-catppuccin.sh"
+	ln -sf "${SCRIPT_DIR}/dotfiles/common/fzf-catppuccin.sh" "$zsh_config_dir/fzf-catppuccin.sh"
 
 	local fzf_theme_source_line="source \"$zsh_config_dir/fzf-catppuccin.sh\""
 	if ! grep -qF "$zsh_config_dir/fzf-catppuccin.sh" "$HOME/.zshrc" 2>/dev/null; then
@@ -303,33 +303,33 @@ setup_dotfiles() {
 	fi
 
 	mkdir -p "$HOME/.config"
-	ln -sf "${SCRIPT_DIR}/dotfiles/starship.toml" "$HOME/.config/starship.toml"
+	ln -sf "${SCRIPT_DIR}/dotfiles/common/starship.toml" "$HOME/.config/starship.toml"
 
 	local tmux_config_dir="$HOME/.config/tmux"
 	mkdir -p "$tmux_config_dir"
-	ln -sf "${SCRIPT_DIR}/dotfiles/tmux/tmux.conf" "${tmux_config_dir}/tmux.conf"
+	ln -sf "${SCRIPT_DIR}/dotfiles/common/tmux/tmux.conf" "${tmux_config_dir}/tmux.conf"
 
 	ln -sfT "${SCRIPT_DIR}/dotfiles/nvim" "$HOME/.config/nvim"
 
 	local lazygit_config_dir="$HOME/.config/lazygit"
 	mkdir -p "$lazygit_config_dir"
-	ln -sf "${SCRIPT_DIR}/dotfiles/lazygit/config.yml" "${lazygit_config_dir}/config.yml"
+	ln -sf "${SCRIPT_DIR}/dotfiles/common/lazygit/config.yml" "${lazygit_config_dir}/config.yml"
 
 	local bat_config_dir="$HOME/.config/bat"
 	mkdir -p "$bat_config_dir"
-	ln -sf "${SCRIPT_DIR}/dotfiles/bat/config" "${bat_config_dir}/config"
-	ln -sfT "${SCRIPT_DIR}/dotfiles/bat/themes" "${bat_config_dir}/themes"
+	ln -sf "${SCRIPT_DIR}/dotfiles/common/bat/config" "${bat_config_dir}/config"
+	ln -sfT "${SCRIPT_DIR}/dotfiles/common/bat/themes" "${bat_config_dir}/themes"
 
 	local git_config_dir="$HOME/.config/git"
 	mkdir -p "$git_config_dir"
-	ln -sf "${SCRIPT_DIR}/dotfiles/delta/catppuccin.gitconfig" "${git_config_dir}/catppuccin.gitconfig"
-	ln -sf "${SCRIPT_DIR}/dotfiles/git/aliases.gitconfig" "${git_config_dir}/aliases.gitconfig"
-	ln -sf "${SCRIPT_DIR}/dotfiles/git/config.gitconfig" "${git_config_dir}/config.gitconfig"
+	ln -sf "${SCRIPT_DIR}/dotfiles/common/delta/catppuccin.gitconfig" "${git_config_dir}/catppuccin.gitconfig"
+	ln -sf "${SCRIPT_DIR}/dotfiles/common/git/aliases.gitconfig" "${git_config_dir}/aliases.gitconfig"
+	ln -sf "${SCRIPT_DIR}/dotfiles/common/git/config.gitconfig" "${git_config_dir}/config.gitconfig"
 
 	local btop_config_dir="$HOME/.config/btop"
 	mkdir -p "$btop_config_dir"
-	ln -sf "${SCRIPT_DIR}/dotfiles/btop/btop.conf" "${btop_config_dir}/btop.conf"
-	ln -sfT "${SCRIPT_DIR}/dotfiles/btop/themes" "${btop_config_dir}/themes"
+	ln -sf "${SCRIPT_DIR}/dotfiles/common/btop/btop.conf" "${btop_config_dir}/btop.conf"
+	ln -sfT "${SCRIPT_DIR}/dotfiles/common/btop/themes" "${btop_config_dir}/themes"
 }
 
 build_bat_cache() {
@@ -440,7 +440,7 @@ configure_git() {
 	log "Configuring git"
 
 	# All settings (editor, delta, catppuccin theme, aliases, ...) live in
-	# dotfiles/git/config.gitconfig, symlinked into ~/.config/git by
+	# dotfiles/common/git/config.gitconfig, symlinked into ~/.config/git by
 	# setup_dotfiles. Only this single include is set imperatively here,
 	# since include.path replaces rather than appends on repeated calls.
 	git config --global include.path "$HOME/.config/git/config.gitconfig"
