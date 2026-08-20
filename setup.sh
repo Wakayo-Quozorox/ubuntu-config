@@ -324,6 +324,7 @@ setup_dotfiles() {
 	mkdir -p "$git_config_dir"
 	ln -sf "${SCRIPT_DIR}/dotfiles/delta/catppuccin.gitconfig" "${git_config_dir}/catppuccin.gitconfig"
 	ln -sf "${SCRIPT_DIR}/dotfiles/git/aliases.gitconfig" "${git_config_dir}/aliases.gitconfig"
+	ln -sf "${SCRIPT_DIR}/dotfiles/git/config.gitconfig" "${git_config_dir}/config.gitconfig"
 
 	local btop_config_dir="$HOME/.config/btop"
 	mkdir -p "$btop_config_dir"
@@ -437,22 +438,12 @@ configure_docker() {
 
 configure_git() {
 	log "Configuring git"
-	git config --global core.editor "nvim"
-	git config --global init.defaultBranch main
-	git config --global core.pager delta
-	git config --global interactive.diffFilter "delta --color-only"
-	git config --global delta.navigate true
-	git config --global merge.conflictstyle diff3
-	git config --global diff.colorMoved default
 
-	# Catppuccin Mocha theme for delta, matching tmux/starship/nvim.
-	# The dotfile is symlinked into ~/.config/git by setup_dotfiles.
-	git config --global include.path "$HOME/.config/git/catppuccin.gitconfig"
-	git config --global delta.features catppuccin-mocha
-
-	# Git aliases (co, st, tree, ...). The dotfile is symlinked into
-	# ~/.config/git by setup_dotfiles.
-	git config --global include.path "$HOME/.config/git/aliases.gitconfig"
+	# All settings (editor, delta, catppuccin theme, aliases, ...) live in
+	# dotfiles/git/config.gitconfig, symlinked into ~/.config/git by
+	# setup_dotfiles. Only this single include is set imperatively here,
+	# since include.path replaces rather than appends on repeated calls.
+	git config --global include.path "$HOME/.config/git/config.gitconfig"
 }
 
 main() {

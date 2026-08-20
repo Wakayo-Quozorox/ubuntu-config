@@ -1,0 +1,20 @@
+[core]
+	editor = nvim
+	pager = delta
+[init]
+	defaultBranch = main
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	features = catppuccin-mocha
+[merge]
+	conflictstyle = diff3
+[diff]
+	colorMoved = default
+
+[include]
+	# Catppuccin Mocha theme for delta, matching tmux/starship/nvim.
+	path = ~/.config/git/catppuccin.gitconfig
+	# Git aliases (co, st, tree, ...).
+	path = ~/.config/git/aliases.gitconfig
