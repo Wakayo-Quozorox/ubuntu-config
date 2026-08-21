@@ -312,6 +312,14 @@ setup_dotfiles() {
 		log "Added welcome screen source line to .zshrc"
 	fi
 
+	ln -sf "${SCRIPT_DIR}/dotfiles/idle-matrix.zsh" "$zsh_config_dir/idle-matrix.zsh"
+
+	local idle_matrix_source_line="source \"$zsh_config_dir/idle-matrix.zsh\""
+	if ! grep -qF "$zsh_config_dir/idle-matrix.zsh" "$HOME/.zshrc" 2>/dev/null; then
+		echo "$idle_matrix_source_line" >> "$HOME/.zshrc"
+		log "Added idle-matrix screensaver source line to .zshrc"
+	fi
+
 	mkdir -p "$HOME/.config"
 	ln -sf "${SCRIPT_DIR}/dotfiles/common/starship.toml" "$HOME/.config/starship.toml"
 

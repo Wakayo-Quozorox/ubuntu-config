@@ -40,6 +40,7 @@ ncdu   # disk usage analyzer
 direnv # per-directory environment variables
 tealdeer # simplified man pages (provides the `tldr` binary; the "tldr" apt
          # package itself isn't reliably available across Ubuntu releases)
+cmatrix # idle-screensaver eye candy, launched by dotfiles/idle-matrix.zsh
 
 # Needed to add third-party apt repos (eza, Docker) below
 ca-certificates
